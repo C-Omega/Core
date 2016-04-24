@@ -1,4 +1,7 @@
 ﻿namespace C_Omega
+module ArraySliceImprovement = 
+    type 'a ``[]``  with member x.GetSlice(?a,?b) = let a = defaultArg a 0 in System.ArraySegment<'a>(x,a,(defaultArg b x.Length) - (a+1)).Array
+open ArraySliceImprovement
 module Helpers = 
     ///A exception for breaking a loop
     exception ValueFoundException of obj
