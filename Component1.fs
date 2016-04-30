@@ -79,6 +79,7 @@ module Comm =
         member x.Map (m:Mapper<'b,_>) = {send = m.map >> x.send;receive = x.receive >> m.unmap}
         member x.Log (logger:Logger) = {send = x.send >> side (logger.log << (sprintf ">%A")); receive = x.receive >> side (logger.log << (sprintf "<%A"))}
         member x.FlushTo (v:'a) = if Unchecked.equals v (x.receive()) then () else x.FlushTo v
+        static member Loopback<'b>() : SendReceive<'b>= let b = new System.Collections.Generic.Queue<'b>() in {send = b.Enqueue; receive = fun() -> spinuntil(fun() -> b.Count > 0); b.Dequeue()}
     type bsr = SendReceive<byte[]>
     type BufferedSendReceive<'a>(sr:SendReceive<'a>) = 
         let v = new ResizeArray<'a>()
