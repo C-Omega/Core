@@ -76,9 +76,10 @@ module Comm =
     exception WrongCommType
     type SendReceive<'a> = 
         {send : 'a -> unit;receive : unit -> 'a}
-        member x.Map (m:Mapper<'b,_>) = {send = m.map >> x.send;receive = x.receive >> m.unmap}
-        member x.Log (logger:Logger) = {send = x.send >> side (logger.log << (sprintf ">%A")); receive = x.receive >> side (logger.log << (sprintf "<%A"))}
-        member x.FlushTo (v:'a) = if Unchecked.equals v (x.receive()) then () else x.FlushTo v
+        //member x.Map (m:Mapper<'b,_>) = {send = m.map >> x.send;receive = x.receive >> m.unmap}
+        //member x.Log (logger:Logger) = {send = x.send >> side (logger.log << (sprintf ">%A")); receive = x.receive >> side (logger.log << (sprintf "<%A"))}
+        //member x.FlushTo (v:'a) = if Unchecked.equals v (x.receive()) then () else x.FlushTo v
+        static member Loopback<'a>() : SendReceive<'a>= let b = new System.Collections.Generic.Queue<'a>() in {send = b.Enqueue; receive = side (spinuntil(fun() -> b.Count > 0)) >> b.Dequeue}
     type bsr = SendReceive<byte[]>
     type BufferedSendReceive<'a>(sr:SendReceive<'a>) = 
         let v = new ResizeArray<'a>()

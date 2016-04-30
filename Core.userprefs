@@ -1,1 +1,12 @@
-﻿<Properties StartupItem="Core.fsproj" />
+﻿<Properties StartupItem="Core.fsproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Component1.fs">
+    <Files>
+      <File FileName="Component1.fs" Line="3" Column="145" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
