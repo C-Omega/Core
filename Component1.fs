@@ -63,7 +63,23 @@ module Helpers =
         for i = 0 to v.Length - 1 do f()|> swap i
         v
     let arg (f:'a->'b->'c) (v:'a) = f v
-    let xor = Array.map2 (arg (^^^))
+    let XOR = Array.map2 (arg (^^^))
+    let promptf pfs = Printf.kprintf (fun s -> printfn "%s: " s;System.Console.ReadLine()) pfs
+    let backspace() = 
+        let v = System.Console.CursorLeft
+        let n = System.Console.CursorLeft <- v-1
+        System.Console.Write(' ')
+        System.Console.CursorLeft <- v-1
+    let readPassword() =
+        let rec inner (s:string) = 
+            let k = System.Console.ReadKey(true)
+            if k.Key = System.ConsoleKey.Enter then System.Console.WriteLine(); s 
+            elif k.Key = System.ConsoleKey.Backspace then 
+                if s.Length > 1 then backspace();inner s.[..s.Length-2]
+                elif s.Length = 1 then backspace();inner ""
+                else printf "\a"; inner s
+            else printf "·";inner (s+k.KeyChar.ToString())
+        inner ""
 type Mapper<'a,'b> =  
     {map:'a->'b;unmap:'b->'a}
     static member Delay i = {map = (fun a -> Helpers.spin i; a); unmap = fun a -> Helpers.spin i;a}
