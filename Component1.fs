@@ -64,7 +64,7 @@ module Helpers =
         v
     let arg (f:'a->'b->'c) (v:'a) = f v
     let XOR = Array.map2 (arg (^^^))
-    let promptf pfs = Printf.kprintf (fun s -> printfn "%s: " s;System.Console.ReadLine()) pfs
+    let promptf pfs = Printf.kprintf (fun s -> printf "%s: " s;System.Console.ReadLine()) pfs
     let backspace() = 
         let v = System.Console.CursorLeft
         let n = System.Console.CursorLeft <- v-1
