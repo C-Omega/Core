@@ -80,6 +80,8 @@ module Helpers =
                 else printf "\a"; inner s
             else printf "·";inner (s+k.KeyChar.ToString())
         inner ""
+    let _b_string (b:byte[]) = System.Text.Encoding.UTF8.GetString b
+    let _string_b (b:string) = System.Text.Encoding.UTF8.GetBytes  b
 type Mapper<'a,'b> =  
     {map:'a->'b;unmap:'b->'a}
     static member Delay i = {map = (fun a -> Helpers.spin i; a); unmap = fun a -> Helpers.spin i;a}
