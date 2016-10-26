@@ -82,6 +82,7 @@ module Helpers =
         inner ""
     let _b_string (b:byte[]) = System.Text.Encoding.UTF8.GetString b
     let _string_b (b:string) = System.Text.Encoding.UTF8.GetBytes  b
+    let (|HasFlag|_|) (flag : 'a when 'a : enum<'b>) (test : 'a) = if (test :> System.Enum).HasFlag flag then Some HasFlag else None
 type Mapper<'a,'b> =  
     {map:'a->'b;unmap:'b->'a}
     static member Delay i = {map = (fun a -> Helpers.spin i; a); unmap = fun a -> Helpers.spin i;a}
