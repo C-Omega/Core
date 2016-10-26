@@ -15,6 +15,7 @@ module Store =
             removeall :('Index -> 'Value -> bool)  -> unit
             setall    :('Index -> 'Value -> 'Value option) -> unit
             remove    : 'Index -> unit
+            choose    :('Index -> 'Value -> obj option) -> obj seq
         }
     let _dict_store (d:Dictionary<'a, 'b>) : Store<'a, 'b> =
         {
@@ -28,4 +29,5 @@ module Store =
             removeall = fun f   -> Seq.iter   (function |KeyValue(a,b) when f a b -> d.Remove a |> ignore |_ -> ()) d
             setall    = fun f   -> Seq.iter   (function |KeyValue(a,b) ->   f a b |> Option.iter (fun c -> d.[a] <- c)) d
             remove    = d.Remove >> ignore
+            choose    = fun f   -> Seq.choose (function |KeyValue(a,b) ->   f a b) d
         }
