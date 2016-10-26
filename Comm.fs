@@ -3,6 +3,7 @@ open ArraySliceImprovement
 module Comm = 
     open System.Net
     open Helpers
+    open Logger
     exception WrongCommType
     type SendReceive<'a> = 
         {send : 'a -> unit;receive : unit -> 'a}

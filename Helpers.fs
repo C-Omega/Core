@@ -5,9 +5,6 @@ open ArraySliceImprovement
 module Helpers = 
     ///A exception for breaking a loop
     exception ValueFoundException of obj
-    type Logger = 
-        {log : string -> unit}
-        static member Printn = {log = System.Console.WriteLine}
     type Stopwatch() = 
         let s = new System.Diagnostics.Stopwatch()
         member x.Start() = s.Start()
