@@ -7,7 +7,9 @@ module Store =
         interface
             abstract get       : 'Index -> 'Value option
             abstract Item      : 'Index -> 'Value
+            ///Nothing MUST happen if the index is invalid
             abstract set       : 'Index -> 'Value -> unit
+            ///Nothing MUST happen if the index already exists
             abstract add       : 'Index -> 'Value -> unit
             abstract search    : 'Value -> seq<'Index>
             abstract find      :('Index -> 'Value -> bool)  -> ('Index * 'Value) option
@@ -44,7 +46,7 @@ module Store =
             member x.Item i      = d.Item i
             member x.get i       = i |>  d.TryGetValue |> function | false, _ -> None | _, a -> Some a
             member x.set i j     = d.[i] <- j
-            member x.add i j     = d.Add(i, j)
+            member x.add i j     = try d.Add(i, j) with |_ -> ()
             member x.search i    = Seq.choose (function |KeyValue(a,b) when b = i -> Some a    |_ -> None) d
             member x.find f      = Seq.tryPick(function |KeyValue(a,b) when f a b -> Some(a,b) |_ -> None) d
             member x.findall f   = Seq.choose (function |KeyValue(a,b) when f a b -> Some(a,b) |_ -> None) d
@@ -63,8 +65,8 @@ module Store =
         {new IStore<string, byte[]> with
             member x.Item i      = (r i).Value
             member x.get i       = r i
-            member x.set i j     = File.WriteAllBytes(path+"/"+i,j)
-            member x.add i j     = File.WriteAllBytes(path+"/"+i,j)
+            member x.set i j     = if File.Exists i then File.WriteAllBytes(path+"/"+i,j)
+            member x.add i j     = if not(File.Exists i) then File.WriteAllBytes(path+"/"+i,j)
             member x.search i    = Directory.EnumerateFiles path |> Seq.filter (fun s -> File.ReadAllBytes s = i)//if File.Exists (path+"/"+i) then Seq.singleton (File.ReadAllText i) else Seq.empty
             member x.find f      = path |> Directory.EnumerateFiles |> Seq.tryPick (fun s -> r s |> function |None -> None |Some b -> if f s b then Some(s, b) else None)
             member x.findall f   = path |> Directory.EnumerateFiles |> Seq.choose  (fun s -> r s |> function |None -> None |Some b -> if f s b then Some(s, b) else None)
