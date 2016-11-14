@@ -4,3 +4,8 @@
 /home/harlan/C-Omega/Core/obj/Debug/Core.dll
 /home/harlan/C-Omega/Core/obj/Debug/Core.dll.mdb
 /home/harlan/C-Omega/Core/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.fs
+/home/harlan/Cloud/Core/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.fs
+/home/harlan/Cloud/Core/bin/Debug/Core.dll.mdb
+/home/harlan/Cloud/Core/bin/Debug/Core.dll
+/home/harlan/Cloud/Core/obj/Debug/Core.dll
+/home/harlan/Cloud/Core/obj/Debug/Core.dll.mdb
