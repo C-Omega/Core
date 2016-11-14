@@ -1,8 +1,8 @@
 ﻿<Properties StartupItem="Core.fsproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Component1.fs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Logger.fs">
     <Files>
-      <File FileName="Component1.fs" Line="67" Column="54" />
+      <File FileName="Logger.fs" Line="14" Column="56" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
