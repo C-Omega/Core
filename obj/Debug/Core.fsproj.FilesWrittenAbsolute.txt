@@ -9,3 +9,8 @@
 /home/harlan/Cloud/Core/bin/Debug/Core.dll
 /home/harlan/Cloud/Core/obj/Debug/Core.dll
 /home/harlan/Cloud/Core/obj/Debug/Core.dll.mdb
+/home/harlan/Projects/Num16/Core/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.fs
+/home/harlan/Projects/Num16/Core/bin/Debug/Core.dll.mdb
+/home/harlan/Projects/Num16/Core/bin/Debug/Core.dll
+/home/harlan/Projects/Num16/Core/obj/Debug/Core.dll
+/home/harlan/Projects/Num16/Core/obj/Debug/Core.dll.mdb

@@ -82,6 +82,14 @@ module Helpers =
     let (|HasFlag|_|) (flag : 'a when 'a : enum<'b>) (test : 'a) = if (test :> System.Enum).HasFlag flag then Some HasFlag else None
     let (|Is|_|) a b = if a = b then Some Is else None
     let (|IsNot|_|) a b = if a <> b then Some IsNot else None
+    let try_slice_index (target : 'a []) (slice : 'a []) =
+        let rec f i j =
+            if j = slice.Length then i - slice.Length
+            elif i = target.Length then -1
+            elif target.[i] = slice.[j] then printfn "%A : %A" i j; f (i + 1) (j + 1)
+            else f (i + 1) 0
+        let q = f 0 0
+        if q = -1 then None else Some q
 type Mapper<'a,'b> =  
     {map:'a->'b;unmap:'b->'a}
     static member Delay i = {map = (fun a -> Helpers.spin i; a); unmap = fun a -> Helpers.spin i;a}
