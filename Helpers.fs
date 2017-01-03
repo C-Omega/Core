@@ -82,7 +82,7 @@ module Helpers =
     let (|HasFlag|_|) (flag : 'a when 'a : enum<'b>) (test : 'a) = if (test :> System.Enum).HasFlag flag then Some HasFlag else None
     let (|Is|_|) a b = if a = b then Some Is else None
     let (|IsNot|_|) a b = if a <> b then Some IsNot else None
-    let try_slice_index (target : 'a []) (slice : 'a []) =
+    let try_slice_index (slice : 'a []) (target : 'a []) =
         let rec f i j =
             if j = slice.Length then i - slice.Length
             elif i = target.Length then -1
