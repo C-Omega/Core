@@ -86,10 +86,22 @@ module Helpers =
         let rec f i j =
             if j = slice.Length then i - slice.Length
             elif i = target.Length then -1
-            elif target.[i] = slice.[j] then printfn "%A : %A" i j; f (i + 1) (j + 1)
+            elif target.[i] = slice.[j] then f (i + 1) (j + 1)
             else f (i + 1) 0
         let q = f 0 0
         if q = -1 then None else Some q
+    let replace_all (old_slice : 'a[]) new_slice (target : 'a []) =
+        let i = old_slice.Length
+        let rec inner acc j =
+            match try_slice_index old_slice target.[j..] with
+            | None   -> Array.append acc target.[j ..]
+            | Some k -> 
+                let k = k + j
+                let n' = k + i
+                printfn "!%A-%A" k n'
+                let res = Array.concat [| acc; target.[j .. k - 1]; new_slice |]
+                inner res n'
+        inner [||] 0
 type Mapper<'a,'b> =  
     {map:'a->'b;unmap:'b->'a}
     static member Delay i = {map = (fun a -> Helpers.spin i; a); unmap = fun a -> Helpers.spin i;a}
