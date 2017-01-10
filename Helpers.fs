@@ -102,6 +102,11 @@ module Helpers =
                 let res = Array.concat [| acc; target.[j .. k - 1]; new_slice |]
                 inner res n'
         inner [||] 0
+    //Exclusive. Equally as efficient at removing one as it is at removing many, and can be used instead of a.[..i] or a.[..j]
+    let remove_between i j (a : _[]) = 
+        let i' = (i = -1)
+        let j' = (j = a.Length)
+        if i' && j' then [||] elif i' then a.[j..] elif j' then a.[..i] else Array.append a.[..i] a.[j..]
 type Mapper<'a,'b> =  
     {map:'a->'b;unmap:'b->'a}
     static member Delay i = {map = (fun a -> Helpers.spin i; a); unmap = fun a -> Helpers.spin i;a}
